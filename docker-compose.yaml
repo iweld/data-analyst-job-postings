@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: data-analyst-job-postings
+    restart: unless-stopped
+     #- .env
+    environment:
+      POSTGRES_DB: data-analyst-job-postings
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      -
+        type: bind
+        source: ./db
+        target: /var/lib/postgresql/data
+      -
+        type: bind
+        source: ./source_data
+        target: /var/lib/postgresql/source_data
+    networks:
+      - reference
+networks:
+  reference:
