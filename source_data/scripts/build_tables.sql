@@ -17,6 +17,12 @@
 DROP SCHEMA import_data CASCADE;
 CREATE SCHEMA IF NOT EXISTS import_data;
 
+/*
+ *  Github only allows file sizes smaller than 100mb.  This dataset is at over 130mb on 2023-09-09.
+ *  I split the CSV files into standard calendar quarters (Q1, Q2, Q3, Q4) for those that wish to use the CSV files on my repo.
+ * 
+ */
+
 -- Import data from CSV files
 -- Create Data Analyst Jobs Table
 DROP TABLE IF EXISTS import_data.jobs;
@@ -50,7 +56,7 @@ CREATE TABLE import_data.jobs (
 	description_tokens TEXT,
 	PRIMARY KEY (data_job_id)
 );
--- gsearch_jobs CSV files.
+-- gsearch_jobs 2022 CSV file.
 COPY import_data.jobs (
 	data_job_id,
 	idx,
@@ -83,6 +89,7 @@ COPY import_data.jobs (
 FROM '/var/lib/postgresql/source_data/csv/gsearch_jobs_2022.csv'
 WITH DELIMITER ',' HEADER CSV;
 
+-- gsearch_jobs_2023_q1 CSV file.
 COPY import_data.jobs (
 	data_job_id,
 	idx,
@@ -115,6 +122,7 @@ COPY import_data.jobs (
 FROM '/var/lib/postgresql/source_data/csv/gsearch_jobs_2023_q1.csv'
 WITH DELIMITER ',' HEADER CSV;
 
+-- gsearch_jobs_2023_q2 CSV file.
 COPY import_data.jobs (
 	data_job_id,
 	idx,
@@ -147,6 +155,7 @@ COPY import_data.jobs (
 FROM '/var/lib/postgresql/source_data/csv/gsearch_jobs_2023_q2.csv'
 WITH DELIMITER ',' HEADER CSV;
 
+-- gsearch_jobs_2023_q3 CSV file.
 COPY import_data.jobs (
 	data_job_id,
 	idx,
@@ -179,6 +188,7 @@ COPY import_data.jobs (
 FROM '/var/lib/postgresql/source_data/csv/gsearch_jobs_2023_q3.csv'
 WITH DELIMITER ',' HEADER CSV;
 
+-- Create working table with 'cleaned' data.
 
 DROP SCHEMA IF EXISTS data_analyst CASCADE;
 CREATE SCHEMA IF NOT EXISTS data_analyst;
@@ -278,7 +288,18 @@ INSERT INTO data_analyst.jobs (
 		import_data.jobs
 );
 
-SELECT * FROM data_analyst.jobs ORDER BY random() LIMIT 100;
+-- Remove the posted_at value from the extensions column
+
+UPDATE data_analyst.jobs
+SET
+	extensions = array_remove(extensions, posted_at);
+
+-- Drop import schema and table
+
+DROP TABLE import_data.jobs;
+DROP SCHEMA import_data CASCADE;
+
+
 
 
 
