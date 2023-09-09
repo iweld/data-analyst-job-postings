@@ -1,14 +1,14 @@
 /*
 	Data Analyst Job Postings
 	SQL Author: Jaime M. Shaker
-	Dataset Author: Luke Barousse (https://www.linkedin.com/in/luke-b/) (https://www.youtube.com/@LukeBarousse)
+	Dataset Creator: Luke Barousse (https://www.linkedin.com/in/luke-b/) (https://www.youtube.com/@LukeBarousse)
 	Dataset Location: https://www.kaggle.com/datasets/lukebarousse/data-analyst-job-postings-google-search
 	Email: jaime.m.shaker@gmail.com or jaime@shaker.dev
 	Website: https://www.shaker.dev
 	LinkedIn: https://www.linkedin.com/in/jaime-shaker/
 	
 	File Name: build_tables.sql
-	Description:  This script will import data from the CSV file and create the 
+	Description:  This script will import data from the CSV files and create the 
 	schema, tables and table relationships for this project.  Once it is complete, 
 	it will drop any unecessary schemas and tables.
 */
@@ -179,6 +179,7 @@ COPY import_data.jobs (
 FROM '/var/lib/postgresql/source_data/csv/gsearch_jobs_2023_q3.csv'
 WITH DELIMITER ',' HEADER CSV;
 
+
 DROP SCHEMA IF EXISTS data_analyst CASCADE;
 CREATE SCHEMA IF NOT EXISTS data_analyst;
 
@@ -248,17 +249,17 @@ INSERT INTO data_analyst.jobs (
 	SELECT
 		data_job_id::int,
 		idx::int,
-		lower(trim(title)),
-		lower(trim(company_name)),
-		lower(trim(job_location)),
-		lower(trim(RIGHT(via, length(via) - 4))),
-		trim(regexp_replace(description, E'[\\n]+', chr(13), 'g' )),
+		lower(trim(title)) AS title,
+		lower(trim(company_name)) AS company_name,
+		lower(trim(job_location)) AS job_location,
+		lower(trim(RIGHT(via, length(via) - 4))) AS via,
+		trim(regexp_replace(description, E'[\\n]+', chr(13), 'g' )) AS description,
 		string_to_array(REGEXP_REPLACE(extensions, '[\[\]'']', '', 'g'), ', ') AS extensions,
 		job_id,
 		thumbnail,
 		posted_at,
 		schedule_type,
-		upper(work_from_home)::boolean,
+		upper(work_from_home)::boolean AS work_from_home,
 		salary,
 		search_term,
 		date_time::timestamp,
@@ -276,6 +277,8 @@ INSERT INTO data_analyst.jobs (
 	FROM
 		import_data.jobs
 );
+
+SELECT * FROM data_analyst.jobs ORDER BY random() LIMIT 100;
 
 
 
