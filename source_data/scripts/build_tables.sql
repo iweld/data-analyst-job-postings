@@ -262,6 +262,7 @@ INSERT INTO data_analyst.jobs (
 		lower(trim(title)) AS title,
 		lower(trim(company_name)) AS company_name,
 		lower(trim(job_location)) AS job_location,
+		-- Remove 'via ' from column 
 		lower(trim(RIGHT(via, length(via) - 4))) AS via,
 		-- Remove Pilcrow character and replace with newline
 		trim(regexp_replace(description, E'[\\n]+', chr(13), 'g' )) AS description,
