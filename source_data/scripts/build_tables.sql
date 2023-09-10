@@ -263,7 +263,9 @@ INSERT INTO data_analyst.jobs (
 		lower(trim(company_name)) AS company_name,
 		lower(trim(job_location)) AS job_location,
 		lower(trim(RIGHT(via, length(via) - 4))) AS via,
+		-- Remove Pilcrow character and replace with newline
 		trim(regexp_replace(description, E'[\\n]+', chr(13), 'g' )) AS description,
+		-- Format to a proper PostgreSQL Array
 		string_to_array(REGEXP_REPLACE(extensions, '[\[\]'']', '', 'g'), ', ') AS extensions,
 		job_id,
 		thumbnail,
@@ -283,6 +285,7 @@ INSERT INTO data_analyst.jobs (
 		salary_hourly::NUMERIC,
 		salary_yearly::NUMERIC,
 		salary_standardized::NUMERIC,
+		-- Format to a proper PostgreSQL Array
 		string_to_array(REGEXP_REPLACE(description_tokens, '[\[\]'']', '', 'g'), ', ') AS description_tokens
 	FROM
 		import_data.jobs
