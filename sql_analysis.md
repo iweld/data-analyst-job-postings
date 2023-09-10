@@ -183,4 +183,36 @@ Contractor               |            51|$43,000.00| $96,318.82|    $75,250.00| 
 Full-time                |          1847|$29,289.84|$101,582.29|    $85,000.00|   $96,500.00|   $112,500.00| $96,500.00|$233,500.00|
 Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00|   $90,000.00|    $92,625.00| $90,000.00|$100,500.00|
 
+**5.**  List basic salary statistics (mean, min, median...) for **yearly** rates and the specific shedule type.
+
+```sql
+WITH get_skills AS (
+	SELECT
+		UNNEST(description_tokens) AS technical_skills
+	FROM
+		data_analyst.jobs
+)
+SELECT
+	technical_skills,
+	count(*) AS frequency,
+	round(100 * count(*)::NUMERIC / (SELECT * FROM get_record_count), 2) AS freq_perc
+FROM
+	get_skills
+GROUP BY
+	technical_skills
+ORDER BY
+	frequency DESC
+LIMIT 5;
+```
+
+**Results:**
+
+technical_skills|frequency|freq_perc|
+----------------|---------|---------|
+sql             |    14603|    51.46|
+excel           |     9656|    34.03|
+python          |     8091|    28.51|
+power_bi        |     7971|    28.09|
+tableau         |     7925|    27.93|
+
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:

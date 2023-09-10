@@ -191,7 +191,25 @@ Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00| 
        
  */
 
+-- List the top 5 most frequently required technical skills and the overall frequency percentage.
 
+WITH get_skills AS (
+	SELECT
+		UNNEST(description_tokens) AS technical_skills
+	FROM
+		data_analyst.jobs
+)
+SELECT
+	technical_skills,
+	count(*) AS frequency,
+	round(100 * count(*)::NUMERIC / (SELECT * FROM get_record_count), 2) AS freq_perc
+FROM
+	get_skills
+GROUP BY
+	technical_skills
+ORDER BY
+	frequency DESC
+LIMIT 5;
 
 
 
