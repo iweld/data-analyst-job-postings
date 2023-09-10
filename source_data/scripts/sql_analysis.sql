@@ -13,7 +13,7 @@
 */
 
 
--- How many records does this table contain?
+-- 1. How many records does this table contain?
 
 SELECT
 	count(*) AS record_count
@@ -28,6 +28,36 @@ record_count|
 ------------+
        28375|
    
+ */
+
+-- 2. List the first six fields (columns) and description tokens for five random rows from this table.
+
+SELECT
+	data_job_id,
+	idx,
+	title,
+	company_name,
+	job_location,
+	via,
+	description_tokens
+FROM
+	data_analyst.jobs
+ORDER BY
+	random()
+LIMIT 5;
+
+-- Results
+
+/*
+
+data_job_id|idx |title                                                               |company_name      |job_location    |via         |description_tokens         |
+-----------+----+--------------------------------------------------------------------+------------------+----------------+------------+---------------------------+
+      16014|1485|data analyst due diligence                                          |upwork            |anywhere        |upwork      |{excel}                    |
+       9161| 370|senior data analyst - cox business                                  |cox communications|midwest city, ok|ziprecruiter|{tableau,excel}            |
+      17520|2991|tableau developer/consultant to help develop and beautify dashboards|upwork            |anywhere        |upwork      |{tableau}                  |
+       3007| 920|quality assurance data analyst                                      |vets2industry     |united states   |bebee       |{sap,spreadsheet,r,airflow}|
+      15556|1027|need data scientist                                                 |upwork            |anywhere        |upwork      |{sql,git,docker,python}    |
+       
  */
 
 
