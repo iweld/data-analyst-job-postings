@@ -183,7 +183,7 @@ Contractor               |            51|$43,000.00| $96,318.82|    $75,250.00| 
 Full-time                |          1847|$29,289.84|$101,582.29|    $85,000.00|   $96,500.00|   $112,500.00| $96,500.00|$233,500.00|
 Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00|   $90,000.00|    $92,625.00| $90,000.00|$100,500.00|
 
-**5.**  List basic salary statistics (mean, min, median...) for **yearly** rates and the specific shedule type.
+**6.**  List the top 5 most frequently required technical skills and the overall frequency percentage.
 
 ```sql
 WITH get_skills AS (

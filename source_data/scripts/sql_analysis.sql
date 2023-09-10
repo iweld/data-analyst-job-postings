@@ -191,7 +191,7 @@ Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00| 
        
  */
 
--- List the top 5 most frequently required technical skills and the overall frequency percentage.
+-- 6. List the top 5 most frequently required technical skills and the overall frequency percentage.
 
 WITH get_skills AS (
 	SELECT
@@ -211,7 +211,19 @@ ORDER BY
 	frequency DESC
 LIMIT 5;
 
+-- Results:
 
+/*
+
+technical_skills|frequency|freq_perc|
+----------------+---------+---------+
+sql             |    14603|    51.46|
+excel           |     9656|    34.03|
+python          |     8091|    28.51|
+power_bi        |     7971|    28.09|
+tableau         |     7925|    27.93|
+       
+ */
 
 
 
