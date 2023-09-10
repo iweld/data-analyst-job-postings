@@ -17,14 +17,6 @@ This repository provides an SQL analysis of employment listings scraped from Goo
 The aim of this analysis is to gain insight into the skills that are frequently mentioned in the job descriptions, frequency of job postings and basic salary statistics.
 
 ## SQL Analysis
-[SQL Analysis](./sql_analysis.md)
 
-## Datasets
-The complete, updated daily dataset can be found on [Kaggle](https://www.kaggle.com/datasets/lukebarousse/data-analyst-job-postings-google-search).  Github restricts file sizes to under 100mb.  Because of this restriction, I have split the current CSV (2022-11-04 through 2023-09-09)  into standard calendar quarters (Q1, Q2, Q3, Q4).
-
-- <strong>gsearch_jobs_2022.csv</strong>: 
-- <strong>gsearch_jobs_2023_q1.csv</strong>: (Jan/Feb/Mar 2023)
-- <strong>gsearch_jobs_2023_q2.csv</strong>: (Apr/May/Jun 2023)
-- <strong>gsearch_jobs_2023_q3.csv</strong>: (Jul/Aug/Sep 2023)
 
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
