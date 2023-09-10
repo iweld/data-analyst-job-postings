@@ -225,6 +225,65 @@ tableau         |     7925|    27.93|
        
  */
 
+-- 7. List the top 20 companies with the most job postings.
+
+SELECT
+	initcap(company_name) AS company_name,
+	count(*) AS number_of_posts
+FROM
+	data_analyst.jobs
+GROUP BY
+	company_name
+ORDER BY
+	number_of_posts DESC
+LIMIT 20;
+
+-- Results:
+
+/*
+
+company_name                           |number_of_posts|
+---------------------------------------+---------------+
+Upwork                                 |           4459|
+Walmart                                |            966|
+Edward Jones                           |            755|
+Corporate                              |            615|
+Talentify.Io                           |            563|
+Cox Communications                     |            517|
+Dice                                   |            275|
+Insight Global                         |            250|
+Staffigo Technical Services, Llc       |            167|
+Centene Corporation                    |            162|
+Jobot                                  |            107|
+Elevance Health                        |            104|
+Harnham                                |             99|
+Unitedhealth Group                     |             90|
+State Of Missouri                      |             89|
+General Dynamics Information Technology|             79|
+Apex Systems                           |             77|
+Mtc Holding Corporation                |             73|
+Saint Louis County Clerks Office       |             73|
+Sam'S Club                             |             72|
+       
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
