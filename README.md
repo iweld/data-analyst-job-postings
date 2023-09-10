@@ -1,4 +1,4 @@
-# Data Analyst Job Postings
+# Data Analyst Job Postings (SQL Based)
 
 **Author**: Jaime M. Shaker <br />
 **Email**: jaime.m.shaker@gmail.com <br />
