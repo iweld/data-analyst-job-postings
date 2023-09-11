@@ -255,4 +255,74 @@ Mtc Holding Corporation                |             73|
 Saint Louis County Clerks Office       |             73|
 Sam'S Club                             |             72|
 
+**8.**  List the top 10 Job titles.
+
+```sql
+SELECT
+	CASE
+		WHEN 
+			title LIKE '%sr%' 
+			OR title LIKE '%iv%' 
+			OR title LIKE '%senior data%' 
+		THEN 'Senior Data Analyst'
+		WHEN 
+			title LIKE '%lead%' 
+			OR title = 'data analyst 2'
+			OR title LIKE '%iii%' 
+			OR title LIKE '%ii%' 
+		THEN 'Mid-Level Data Analyst'
+		WHEN 
+			title IN (
+				'business intelligence analyst',
+				'business analyst', 
+				'business systems data analyst',
+				'bi data analyst')
+		THEN 'Business Data Analyst'
+		WHEN 
+			title = 'entry level data analyst' 
+			OR title IN ( 
+				'jr. data analyst', 
+				'jr data analyst', 
+				'data analyst i',
+				'data analyst 1')
+		THEN 'Junior Data Analyst'
+		WHEN 
+			title IN (
+				'data analyst (remote)', 
+				'data analyst - contract to hire',
+				'data analyst - remote', 
+				'remote data analyst',
+				'data analyst - now hiring',
+				'analyst',
+				'data analysis')
+		THEN 'Data Analyst'
+		ELSE initcap(title)
+	END AS job_titles,
+	count(*) title_count
+FROM
+	data_analyst.jobs
+GROUP BY
+	job_titles
+ORDER BY
+	title_count DESC
+LIMIT 10;
+```
+
+**Results:**
+
+job_titles             |title_count|
+-----------------------|-----------|
+Senior Data Analyst    |       4555|
+Data Analyst           |       3884|
+Mid-Level Data Analyst |       2921|
+Business Data Analyst  |        553|
+Junior Data Analyst    |        365|
+Data Scientist         |        270|
+Marketing Data Analyst |        140|
+Data Engineer          |        136|
+Financial Data Analyst |        122|
+Healthcare Data Analyst|         98|
+
+To be continued...
+
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
