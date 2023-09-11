@@ -337,9 +337,42 @@ Healthcare Data Analyst|         98|
        
  */
 
+-- 9. List monthly job postins for 2023 in chronological order.
 
+WITH get_monthly_jobs AS (
+	SELECT
+		to_char(date_time, 'Month') AS job_month,
+		count(*) AS job_count
+	FROM
+		data_analyst.jobs
+	WHERE
+		EXTRACT('year' FROM date_time) = 2023
+	GROUP BY
+		job_month
+)
+SELECT
+	job_month,
+	job_count
+FROM
+	get_monthly_jobs
+ORDER BY
+	to_date(job_month, 'Month');
 
+/*
 
+job_month|job_count|
+---------+---------+
+January  |     3682|
+February |     2828|
+March    |     2727|
+April    |     2493|
+May      |     2357|
+June     |     2362|
+July     |     2560|
+August   |     3008|
+September|      870|
+       
+ */
 
 
 
