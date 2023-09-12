@@ -383,7 +383,9 @@ SELECT
 FROM
 	get_day_count
 WHERE
-	rnk < 6;
+	rnk < 6
+ORDER BY
+	rnk;
 ```
 
 **Results:**
@@ -391,10 +393,41 @@ WHERE
 single_day|daily_job_count|
 ----------|---------------|
 2022-11-04|            279|
+2022-12-29|            230|
 2022-12-03|            165|
 2022-12-20|            160|
-2022-12-29|            230|
 2023-01-07|            158|
+
+**11.**  List the frequency of benefits listed in the extentions column.
+
+```sql
+WITH get_all_extensions AS (
+	SELECT
+		UNNEST(extensions) AS benefits,
+		count(*) AS benefits_count
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		benefits
+)
+SELECT
+	benefits,
+	benefits_count
+FROM
+	get_all_extensions
+WHERE
+	benefits IN ('Health insurance','Dental insurance','Paid time off')
+ORDER BY
+	benefits_count DESC;
+```
+
+**Results:**
+
+benefits        |benefits_count|
+----------------|--------------|
+Health insurance|          9907|
+Paid time off   |          6563|
+Dental insurance|          6354|
 
 To be continued...
 
