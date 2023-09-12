@@ -362,6 +362,40 @@ June     |     2362|            0.21|
 July     |     2560|            8.38|
 August   |     3008|           17.50|
 
+**10.**  List the top 5 days with the highest number of job postings.
+
+```sql
+WITH get_day_count AS (
+	SELECT
+		date_time::date AS single_day,
+		count(*) AS daily_job_count,
+		DENSE_RANK() OVER (ORDER BY count(*) DESC) AS rnk
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		date_time::date
+	ORDER BY
+		single_day
+)
+SELECT
+	single_day,
+	daily_job_count
+FROM
+	get_day_count
+WHERE
+	rnk < 6;
+```
+
+**Results:**
+
+single_day|daily_job_count|
+----------|---------------|
+2022-11-04|            279|
+2022-12-03|            165|
+2022-12-20|            160|
+2022-12-29|            230|
+2023-01-07|            158|
+
 To be continued...
 
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
