@@ -429,6 +429,46 @@ Health insurance|          9907|
 Paid time off   |          6563|
 Dental insurance|          6354|
 
+**12.**  List the first 10 companies and the combination of benefits they provide.
+
+```sql
+WITH get_all_extensions AS (
+	SELECT
+		data_job_id,
+		company_name,
+		UNNEST(extensions) AS benefits
+	FROM
+		data_analyst.jobs
+)
+SELECT
+	data_job_id,
+	initcap(company_name) AS company_name,
+	array_agg(benefits) AS benefits
+FROM
+	get_all_extensions
+WHERE
+	benefits IN ('Health insurance','Dental insurance','Paid time off')
+GROUP BY 
+	data_job_id,
+	company_name
+LIMIT 10;
+```
+
+**Results:**
+
+data_job_id|company_name       |benefits                                               |
+-----------|-------------------|-------------------------------------------------------|
+0|Chloeta            |{"Dental insurance","Paid time off","Health insurance"}|
+2|Atc                |{"Health insurance"}                                   |
+3|Guidehouse         |{"Health insurance","Dental insurance"}                |
+4|Anmed Health Llc   |{"Dental insurance","Health insurance"}                |
+6|Coinbase           |{"Health insurance","Paid time off","Dental insurance"}|
+8|Prime Team Partners|{"Dental insurance","Health insurance"}                |
+10|Amplify            |{"Health insurance","Paid time off","Dental insurance"}|
+11|Procter & Gamble   |{"Health insurance"}                                   |
+12|Centene Corporation|{"Health insurance","Dental insurance","Paid time off"}|
+16|Geha               |{"Health insurance","Dental insurance","Paid time off"}|
+
 To be continued...
 
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
