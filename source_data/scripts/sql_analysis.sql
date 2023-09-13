@@ -447,7 +447,7 @@ Dental insurance|          6354|
        
  */
 
--- 12. List the frequency of benefits listed in the extentions column.
+-- 12. List the first 10 companies and the combination of benefits they provide.
 
 WITH get_all_extensions AS (
 	SELECT
