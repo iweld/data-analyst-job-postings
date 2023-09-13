@@ -449,25 +449,33 @@ Dental insurance|          6354|
 
 -- 12. List the first 10 companies and the combination of benefits they provide.
 
-WITH get_all_extensions AS (
+DROP TABLE IF EXISTS company_benefits;
+CREATE TEMP TABLE company_benefits AS (
+	WITH get_all_extensions AS (
+		SELECT
+			data_job_id,
+			company_name,
+			UNNEST(extensions) AS benefits
+		FROM
+			data_analyst.jobs
+	)
 	SELECT
 		data_job_id,
-		company_name,
-		UNNEST(extensions) AS benefits
+		initcap(company_name) AS company_name,
+		array_agg(benefits) AS benefits
 	FROM
-		data_analyst.jobs
-)
-SELECT
-	data_job_id,
-	initcap(company_name) AS company_name,
-	array_agg(benefits) AS benefits
-FROM
-	get_all_extensions
-WHERE
-	benefits IN ('Health insurance','Dental insurance','Paid time off')
-GROUP BY 
-	data_job_id,
-	company_name
+		get_all_extensions
+	WHERE
+		benefits IN ('Health insurance','Dental insurance','Paid time off')
+	GROUP BY 
+		data_job_id,
+		company_name
+	LIMIT 10
+);
+
+SELECT * 
+FROM 
+	company_benefits 
 LIMIT 10;
 
 -- Results:
