@@ -478,34 +478,26 @@ Procter & Gamble   |{"Health insurance"}                                   |
 Centene Corporation|{"Paid time off","Health insurance","Dental insurance"}|
 Geha               |{"Dental insurance","Health insurance","Paid time off"}|
 
-**13.**  Using the current temp table list the first 10 companies and the combination of benefits they provide in a table format.
+**13.**  Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
 
 ```sql
 SELECT
 	company_name,
 	CASE
-		WHEN benefits[1] = 'Health insurance' THEN 'Yes'
-		WHEN benefits[2] = 'Health insurance' THEN 'Yes'
-		WHEN benefits[3] = 'Health insurance' THEN 'Yes'
+		WHEN ('Health insurance' = ANY(benefits)) = TRUE THEN 'Yes'
 		ELSE 'No'
 	END AS health_insurance,
 	CASE
-		WHEN benefits[1] = 'Dental insurance' THEN 'Yes'
-		WHEN benefits[2] = 'Dental insurance' THEN 'Yes'
-		WHEN benefits[3] = 'Dental insurance' THEN 'Yes'
+		WHEN ('Dental insurance' = ANY(benefits)) = TRUE THEN 'Yes'
 		ELSE 'No'
 	END AS dental_insurance,
 	CASE
-		WHEN benefits[1] = 'Paid time off' THEN 'Yes'
-		WHEN benefits[2] = 'Paid time off' THEN 'Yes'
-		WHEN benefits[3] = 'Paid time off' THEN 'Yes'
+		WHEN ('Paid time off' = ANY(benefits)) = TRUE THEN 'Yes'
 		ELSE 'No'
 	END AS paid_time_off
 FROM
-	company_benefits
-LIMIT 10;
+	company_benefits;
 ```
-
 **Results:**
 
 company_name       |health_insurance|dental_insurance|paid_time_off|
