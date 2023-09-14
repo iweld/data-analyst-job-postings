@@ -515,7 +515,7 @@ SELECT
 		ELSE 'No'
 	END AS paid_time_off
 FROM
-	company_benefits
+	company_benefits;
 
 -- Results:
 
