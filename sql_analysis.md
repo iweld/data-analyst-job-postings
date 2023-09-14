@@ -453,29 +453,73 @@ CREATE TEMP TABLE company_benefits AS (
 	GROUP BY 
 		data_job_id,
 		company_name
-	LIMIT 10
 );
 
-SELECT * 
+SELECT 
+	company_name,
+	benefits
 FROM 
-	company_benefits 
+	company_benefits
 LIMIT 10;
 ```
 
 **Results:**
 
-data_job_id|company_name       |benefits                                               |
------------|-------------------|-------------------------------------------------------|
-0|Chloeta            |{"Dental insurance","Paid time off","Health insurance"}|
-2|Atc                |{"Health insurance"}                                   |
-3|Guidehouse         |{"Health insurance","Dental insurance"}                |
-4|Anmed Health Llc   |{"Dental insurance","Health insurance"}                |
-6|Coinbase           |{"Health insurance","Paid time off","Dental insurance"}|
-8|Prime Team Partners|{"Dental insurance","Health insurance"}                |
-10|Amplify            |{"Health insurance","Paid time off","Dental insurance"}|
-11|Procter & Gamble   |{"Health insurance"}                                   |
-12|Centene Corporation|{"Health insurance","Dental insurance","Paid time off"}|
-16|Geha               |{"Health insurance","Dental insurance","Paid time off"}|
+company_name       |benefits                                               |
+-------------------|-------------------------------------------------------|
+Chloeta            |{"Health insurance","Dental insurance","Paid time off"}|
+Atc                |{"Health insurance"}                                   |
+Guidehouse         |{"Health insurance","Dental insurance"}                |
+Anmed Health Llc   |{"Health insurance","Dental insurance"}                |
+Coinbase           |{"Dental insurance","Health insurance","Paid time off"}|
+Prime Team Partners|{"Dental insurance","Health insurance"}                |
+Amplify            |{"Dental insurance","Health insurance","Paid time off"}|
+Procter & Gamble   |{"Health insurance"}                                   |
+Centene Corporation|{"Paid time off","Health insurance","Dental insurance"}|
+Geha               |{"Dental insurance","Health insurance","Paid time off"}|
+
+**13.**  Using the current temp table list the first 10 companies and the combination of benefits they provide in a table format.
+
+```sql
+SELECT
+	company_name,
+	CASE
+		WHEN benefits[1] = 'Health insurance' THEN 'Yes'
+		WHEN benefits[2] = 'Health insurance' THEN 'Yes'
+		WHEN benefits[3] = 'Health insurance' THEN 'Yes'
+		ELSE 'No'
+	END AS health_insurance,
+	CASE
+		WHEN benefits[1] = 'Dental insurance' THEN 'Yes'
+		WHEN benefits[2] = 'Dental insurance' THEN 'Yes'
+		WHEN benefits[3] = 'Dental insurance' THEN 'Yes'
+		ELSE 'No'
+	END AS dental_insurance,
+	CASE
+		WHEN benefits[1] = 'Paid time off' THEN 'Yes'
+		WHEN benefits[2] = 'Paid time off' THEN 'Yes'
+		WHEN benefits[3] = 'Paid time off' THEN 'Yes'
+		ELSE 'No'
+	END AS paid_time_off
+FROM
+	company_benefits
+LIMIT 10;
+```
+
+**Results:**
+
+company_name       |health_insurance|dental_insurance|paid_time_off|
+-------------------|----------------|----------------|-------------|
+Chloeta            |Yes             |Yes             |Yes          |
+Atc                |Yes             |No              |No           |
+Guidehouse         |Yes             |Yes             |No           |
+Anmed Health Llc   |Yes             |Yes             |No           |
+Coinbase           |Yes             |Yes             |Yes          |
+Prime Team Partners|Yes             |Yes             |No           |
+Amplify            |Yes             |Yes             |Yes          |
+Procter & Gamble   |Yes             |No              |No           |
+Centene Corporation|Yes             |Yes             |Yes          |
+Geha               |Yes             |Yes             |Yes          |
 
 To be continued...
 
