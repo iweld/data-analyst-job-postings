@@ -498,7 +498,7 @@ Geha               |{"Dental insurance","Health insurance","Paid time off"}|
        
 */
 
--- 13. Using the current temp table list the first 10 companies and the combination of benefits they provide in a table format.
+-- 13. Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
 
 SELECT
 	company_name,
