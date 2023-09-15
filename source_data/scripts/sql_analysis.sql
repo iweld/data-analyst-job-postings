@@ -536,9 +536,19 @@ Geha               |Yes             |Yes             |Yes          |
        
 */
 
-
-
-
+SELECT
+	company_name,
+	count(*)
+FROM
+	data_analyst.jobs
+GROUP BY
+	company_name,
+	description
+HAVING
+	count(*) > 1
+ORDER BY
+	count(*) DESC;
+	
 
 
 
