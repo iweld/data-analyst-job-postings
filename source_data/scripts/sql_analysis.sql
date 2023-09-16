@@ -60,6 +60,35 @@ total_unique_records|
    
 */
 
+-- 3. List the days where there were no jobs posted.
+
+WITH get_single_day AS (
+	SELECT
+		date_time::date AS post_date
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		post_date
+	ORDER BY
+		post_date
+)
+SELECT
+	post_date
+FROM
+	get_single_day
+WHERE NOT EXISTS (
+	SELECT
+		generate_series('2022-11-04', '2023-09-08', INTERVAL '1 day')::date
+);
+
+/*
+
+post_date|
+---------+
+         |
+   
+*/
+
 -- 3. List the top 20 companies and the number of exact job postings.
 
 SELECT
@@ -606,7 +635,12 @@ Geha               |Yes             |Yes             |Yes          |
        
 */
 
-	
+
+
+
+
+
+
 
 
 
