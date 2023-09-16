@@ -80,9 +80,28 @@ LIMIT 20;
 
 /*
 
-total_unique_records|
---------------------+
-               20008|
+company_name                        |same_post_count|
+------------------------------------+---------------+
+cox communications                  |            258|
+cox communications                  |             93|
+edward jones                        |             82|
+edward jones                        |             71|
+edward jones                        |             52|
+edward jones                        |             39|
+edward jones                        |             35|
+commercial solutions                |             35|
+walmart                             |             35|
+walmart                             |             34|
+edward jones                        |             33|
+tulsa remote                        |             32|
+edward jones                        |             31|
+american technology consulting - atc|             31|
+vse corporation                     |             30|
+walmart                             |             29|
+swisslog                            |             28|
+walmart                             |             28|
+atc                                 |             28|
+cox communications                  |             27|
    
 */
 
