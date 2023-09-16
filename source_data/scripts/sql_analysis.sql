@@ -88,7 +88,7 @@ post_date|
    
 */
 
--- 3. List the top 20 companies and the number of exact job postings.
+-- 4. List the top 20 companies and the number of exact job postings.
 
 SELECT
 	company_name,
@@ -133,7 +133,7 @@ cox communications                  |             27|
    
 */
 
--- 4. List the first six fields (columns) and description tokens for five random rows from this table.
+-- 5. List the first six fields (columns) and description tokens for five random rows from this table.
 
 SELECT
 	data_job_id,
@@ -163,7 +163,7 @@ data_job_id|idx |title                                                          
        
 */
 
--- 5. How many records do not have any salary information and what is the percentage of records that do not have any salary information?
+-- 6. How many records do not have any salary information and what is the percentage of records that do not have any salary information?
 
 WITH get_totals_cte AS (
 	SELECT
@@ -192,7 +192,7 @@ total_record_count|no_salary_count|record_diff|no_salary_percentage|
    
 */
 
--- 6. List basic salary statistics (mean, min, median...) for hourly rates and the specific shedule type.
+-- 7. List basic salary statistics (mean, min, median...) for hourly rates and the specific shedule type.
 
 WITH get_hourly_stats AS (
 	SELECT
@@ -244,7 +244,7 @@ Uknown                   |             6|    $27.50|    $57.46|        $57.95|  
        
 */
 
--- 7. List basic salary statistics (mean, min, median...) for yearly rates and the specific shedule type.
+-- 8. List basic salary statistics (mean, min, median...) for yearly rates and the specific shedule type.
 
 WITH get_yearly_stats AS (
 	SELECT
@@ -289,7 +289,7 @@ Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00| 
        
 */
 
--- 8. List the top 5 most frequently required technical skills and the overall frequency percentage.
+-- 9. List the top 5 most frequently required technical skills and the overall frequency percentage.
 
 WITH get_skills AS (
 	SELECT
@@ -323,7 +323,7 @@ tableau         |     7925|    27.93|
        
 */
 
--- 9. List the top 20 companies with the most job postings.
+-- 10. List the top 20 companies with the most job postings.
 
 SELECT
 	initcap(company_name) AS company_name,
@@ -365,7 +365,7 @@ Sam'S Club                             |             72|
        
 */
 
--- 10. List the top 10 Job titles.
+-- 11. List the top 10 Job titles.
 
 SELECT
 	CASE
@@ -435,7 +435,7 @@ Healthcare Data Analyst|         98|
        
 */
 
--- 11. List monthly job postings for the first 8 months of 2023 in chronological order.
+-- 12. List monthly job postings for the first 8 months of 2023 in chronological order.
 
 WITH get_monthly_jobs AS (
 	SELECT
@@ -474,7 +474,7 @@ August   |     3008|           17.50|
        
 */
 
--- 12. List the top 5 days with the highest number of job postings.
+-- 13. List the top 5 days with the highest number of job postings.
 
 WITH get_day_count AS (
 	SELECT
@@ -512,7 +512,7 @@ single_day|daily_job_count|
        
 */
 
--- 13. List the frequency of benefits listed in the extentions column.
+-- 14. List the frequency of benefits listed in the extentions column.
 
 WITH get_all_extensions AS (
 	SELECT
@@ -545,7 +545,7 @@ Dental insurance|          6354|
        
 */
 
--- 14. List the first 10 companies and the combination of benefits they provide.
+-- 15. List the first 10 companies and the combination of benefits they provide.
 
 DROP TABLE IF EXISTS company_benefits;
 CREATE TEMP TABLE company_benefits AS (
@@ -596,7 +596,7 @@ Geha               |{"Dental insurance","Health insurance","Paid time off"}|
        
 */
 
--- 15. Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
+-- 16. Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
 
 SELECT
 	company_name,
