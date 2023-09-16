@@ -77,8 +77,7 @@ SELECT
 FROM
 	get_single_day
 WHERE NOT EXISTS (
-	SELECT
-		generate_series('2022-11-04', '2023-09-08', INTERVAL '1 day')::date
+	SELECT generate_series('2022-11-04', '2023-09-08', INTERVAL '1 day')::date
 );
 
 /*
