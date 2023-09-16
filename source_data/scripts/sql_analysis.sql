@@ -33,7 +33,58 @@ record_count|
 ------------+
        28375|
    
- */
+*/
+
+-- 2. How many unique records does this table contain?
+
+WITH get_unique_postings AS (
+	SELECT
+		count(DISTINCT description) AS record_count
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		description
+)
+SELECT
+	sum(record_count) AS total_unique_records
+FROM
+	get_unique_postings;
+
+-- Results:
+
+/*
+
+total_unique_records|
+--------------------+
+               20008|
+   
+*/
+
+-- 2. List the top 20 companies and the number of exact job postings.
+
+SELECT
+	company_name,
+	count(*) AS same_post_count
+FROM
+	data_analyst.jobs
+GROUP BY
+	company_name,
+	description
+HAVING
+	count(*) > 1
+ORDER BY
+	same_post_count DESC
+LIMIT 20;
+
+-- Results:
+
+/*
+
+total_unique_records|
+--------------------+
+               20008|
+   
+*/
 
 -- 2. List the first six fields (columns) and description tokens for five random rows from this table.
 
@@ -536,18 +587,6 @@ Geha               |Yes             |Yes             |Yes          |
        
 */
 
-SELECT
-	company_name,
-	count(*)
-FROM
-	data_analyst.jobs
-GROUP BY
-	company_name,
-	description
-HAVING
-	count(*) > 1
-ORDER BY
-	count(*) DESC;
 	
 
 
