@@ -35,7 +35,101 @@ record_count|
 ------------|
 28375|
 
-**2.**  List the first six fields (columns) and description tokens for five random rows from this table.
+**2.**  How many unique records does this table contain?
+
+```sql
+WITH get_unique_postings AS (
+	SELECT
+		count(DISTINCT description) AS record_count
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		description
+)
+SELECT
+	sum(record_count) AS total_unique_records
+FROM
+	get_unique_postings;
+```
+
+**Results:**
+
+total_unique_records|
+--------------------|
+20008|
+
+**3.**  List the days where there were no jobs posted.
+
+```sql
+WITH get_single_day AS (
+	SELECT
+		date_time::date AS post_date
+	FROM
+		data_analyst.jobs
+	GROUP BY
+		post_date
+	ORDER BY
+		post_date
+)
+SELECT
+	post_date
+FROM
+	get_single_day
+WHERE NOT EXISTS (
+	SELECT generate_series('2022-11-04', '2023-09-08', INTERVAL '1 day')::date
+);
+```
+
+**Results:**
+
+post_date|
+---------|
+NULL|
+
+**4.**  List the top 20 companies and the number of exact job postings.
+
+```sql
+SELECT
+	company_name,
+	count(*) AS same_post_count
+FROM
+	data_analyst.jobs
+GROUP BY
+	company_name,
+	description
+HAVING
+	count(*) > 1
+ORDER BY
+	same_post_count DESC
+LIMIT 20;
+```
+
+**Results:**
+
+company_name                        |same_post_count|
+------------------------------------|---------------|
+cox communications                  |            258|
+cox communications                  |             93|
+edward jones                        |             82|
+edward jones                        |             71|
+edward jones                        |             52|
+edward jones                        |             39|
+edward jones                        |             35|
+commercial solutions                |             35|
+walmart                             |             35|
+walmart                             |             34|
+edward jones                        |             33|
+tulsa remote                        |             32|
+edward jones                        |             31|
+american technology consulting - atc|             31|
+vse corporation                     |             30|
+walmart                             |             29|
+swisslog                            |             28|
+walmart                             |             28|
+atc                                 |             28|
+cox communications                  |             27|
+
+**5.**  List the first six fields (columns) and description tokens for five random rows from this table.
 
 ```sql
 SELECT
@@ -63,7 +157,7 @@ data_job_id|idx |title                                                          
 3007| 920|quality assurance data analyst                                      |vets2industry     |united states   |bebee       |{sap,spreadsheet,r,airflow}|
 15556|1027|need data scientist                                                 |upwork            |anywhere        |upwork      |{sql,git,docker,python}    |
 
-**3.**  How many records do not have any salary information and what is the percentage of records that do not have any salary information?
+**6.**  How many records do not have any salary information and what is the percentage of records that do not have any salary information?
 
 ```sql
 WITH get_totals_cte AS (
@@ -90,7 +184,7 @@ total_record_count|no_salary_count|record_diff|no_salary_percentage|
 ------------------|---------------|-----------|--------------------|
 28375|          23255|       5120|               81.96|
 
-**4.**  List basic salary statistics (mean, min, median...) for **hourly** rates and the specific shedule type.
+**7.**  List basic salary statistics (mean, min, median...) for **hourly** rates and the specific shedule type.
 
 ```sql
 WITH get_hourly_stats AS (
@@ -140,7 +234,7 @@ Internship               |             3|    $21.00|    $22.17|        $21.75|  
 Part-time                |            50|    $12.00|    $43.27|        $25.00|       $31.50|        $56.13|     $30.00|   $112.50|
 Uknown                   |             6|    $27.50|    $57.46|        $57.95|       $62.50|        $66.88|     $67.50|    $67.50|
 
-**5.**  List basic salary statistics (mean, min, median...) for **yearly** rates and the specific shedule type.
+**8.**  List basic salary statistics (mean, min, median...) for **yearly** rates and the specific shedule type.
 
 ```sql
 WITH get_yearly_stats AS (
@@ -183,7 +277,7 @@ Contractor               |            51|$43,000.00| $96,318.82|    $75,250.00| 
 Full-time                |          1847|$29,289.84|$101,582.29|    $85,000.00|   $96,500.00|   $112,500.00| $96,500.00|$233,500.00|
 Part-time                |             4|$37,300.00| $79,450.00|    $76,825.00|   $90,000.00|    $92,625.00| $90,000.00|$100,500.00|
 
-**6.**  List the top 5 most frequently required technical skills and the overall frequency percentage.
+**9.**  List the top 5 most frequently required technical skills and the overall frequency percentage.
 
 ```sql
 WITH get_skills AS (
@@ -215,7 +309,7 @@ python          |     8091|    28.51|
 power_bi        |     7971|    28.09|
 tableau         |     7925|    27.93|
 
-**7.**  List the top 20 companies with the most job postings.
+**10.**  List the top 20 companies with the most job postings.
 
 ```sql
 SELECT
@@ -255,7 +349,7 @@ Mtc Holding Corporation                |             73|
 Saint Louis County Clerks Office       |             73|
 Sam'S Club                             |             72|
 
-**8.**  List the top 10 Job titles.
+**11.**  List the top 10 Job titles.
 
 ```sql
 SELECT
@@ -323,7 +417,7 @@ Data Engineer          |        136|
 Financial Data Analyst |        122|
 Healthcare Data Analyst|         98|
 
-**9.**  List monthly job postings for the first 8 months of 2023 in chronological order.
+**12.**  List monthly job postings for the first 8 months of 2023 in chronological order.
 
 ```sql
 WITH get_monthly_jobs AS (
@@ -362,7 +456,7 @@ June     |     2362|            0.21|
 July     |     2560|            8.38|
 August   |     3008|           17.50|
 
-**10.**  List the top 5 days with the highest number of job postings.
+**13.**  List the top 5 days with the highest number of job postings.
 
 ```sql
 WITH get_day_count AS (
@@ -398,7 +492,7 @@ single_day|daily_job_count|
 2022-12-20|            160|
 2023-01-07|            158|
 
-**11.**  List the frequency of benefits listed in the extentions column.
+**14.**  List the frequency of benefits listed in the extentions column.
 
 ```sql
 WITH get_all_extensions AS (
@@ -429,7 +523,7 @@ Health insurance|          9907|
 Paid time off   |          6563|
 Dental insurance|          6354|
 
-**12.**  List the first 10 companies and the combination of benefits they provide.
+**15.**  List the first 10 companies and the combination of benefits they provide.
 
 ```sql
 DROP TABLE IF EXISTS company_benefits;
@@ -478,7 +572,7 @@ Procter & Gamble   |{"Health insurance"}                                   |
 Centene Corporation|{"Paid time off","Health insurance","Dental insurance"}|
 Geha               |{"Dental insurance","Health insurance","Paid time off"}|
 
-**13.**  Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
+**16.**  Using the current temp table, list the first 10 companies and the combination of benefits they provide in a table format.
 
 ```sql
 SELECT
